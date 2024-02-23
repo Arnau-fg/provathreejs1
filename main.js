@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import "./style.css";
+import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { s } from 'vite/dist/node/types.d-jgA8ss1A';
 
 // Grabbing the canvas from the html
 const canvas = document.querySelector('canvas.webgl');
@@ -125,3 +127,37 @@ const loop = () => {
 }
 
 loop();
+
+
+// Animation with GSAP
+
+// This is like an animation manager
+const tl = gsap.timeline({defaults: {duration: 1}});
+
+// These fromTo methods require the object, as seen can be a JS object or a string with a query selector
+// The second parameter is the initial state of the object
+// The third parameter is the final state of the object
+tl.fromTo(mesh.scale, {z:0, x:0, y:0}, {z:1, x:1, y:1});
+tl.fromTo("nav", {y: "-100%"}, {y: "0%", ease: "power2.inOut"});
+tl.fromTo(".title", {opacity: 0}, {opacity: 1, ease: "power2.inOut"});
+
+
+// Color animator
+let mouseDown = false;
+let rgb = {r: 0, g: 0, b: 0};
+
+document.addEventListener('mousedown', () => {
+  mouseDown = true;
+});
+document.addEventListener('mouseup', () => {
+  mouseDown = false;
+});
+
+document.addEventListener('mousemove', (event) => {
+  // if (mouseDown) {
+  //   rgb.r = event.clientX / sizes.width * 255;
+  //   rgb.g = event.clientY / sizes.height * 255;
+  //   rgb.b = 150;
+  //   mesh.material.color.setRGB(rgb.r, rgb.g, rgb.b);
+  // }
+});
