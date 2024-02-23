@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* canvas */
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* nav */
+
+nav {
+    position: relative;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    padding: 3vh 15vw;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 10vw;
+    align-items: center;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    z-index: 2;
+    position: absolute;
+    color: white;
+
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -25%);
+}
