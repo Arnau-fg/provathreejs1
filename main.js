@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import "./style.css";
 import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { s } from 'vite/dist/node/types.d-jgA8ss1A';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // Grabbing the canvas from the html
 const canvas = document.querySelector('canvas.webgl');
@@ -36,10 +36,20 @@ const mesh = new THREE.Mesh(geometry, material);
 
 // Then we add the mesh to the scene.
 console.log(mesh);
-scene.add(mesh);
+// scene.add(mesh);
+
+// Loading a 3D model
+const loader = new GLTFLoader();
+loader.load('./models/bastion/scene.gltf', (gltf) => {
+  // console.log(gltf);
+  scene.add(gltf.scene);
+});
 
 // Creating a light
-const light = new THREE.PointLight(0xffffff, 20, 100);
+
+const light = new THREE.AmbientLight(0xffffff, 1);
+
+// const light = new THREE.PointLight(0xffffff, 1, 100);
 // The first parameter is the color of the light. The second parameter is the intensity of the light. The third parameter is the distance of the light. There are more effects that you can add to the light.
 
 // Then we set the position of the light.
@@ -55,7 +65,7 @@ const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 
 // The first parameter is the field of view. The second parameter is the aspect ratio. The third and fourth parameters are the near and far planes.
 console.log(camera);
 // Then we set the position of the camera.
-camera.position.z = 20;
+camera.position.z = 10;
 
 // Adding the camera to the scene.
 scene.add(camera);
@@ -68,7 +78,7 @@ const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
 // This makes it so they can't zoom or move around.
-controls.enableZoom = false;
+controls.enableZoom = true;
 controls.enablePan = false;
 controls.autoRotate = true;
 
@@ -154,10 +164,11 @@ document.addEventListener('mouseup', () => {
 });
 
 document.addEventListener('mousemove', (event) => {
-  // if (mouseDown) {
-  //   rgb.r = event.clientX / sizes.width * 255;
-  //   rgb.g = event.clientY / sizes.height * 255;
-  //   rgb.b = 150;
-  //   mesh.material.color.setRGB(rgb.r, rgb.g, rgb.b);
-  // }
+  if (mouseDown) {
+    rgb.r = event.clientX / sizes.width * 255;
+    rgb.g = event.clientY / sizes.height * 255;
+    rgb.b = Math.random() * 255;
+    console.log(rgb);
+    mesh.material.color.setRGB(rgb.r, rgb.g, rgb.b);
+  }
 });
