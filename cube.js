@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import "./style.css";
 import gsap from 'gsap';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // Grabbing the canvas from the html
 const canvas = document.querySelector('canvas.webgl');
@@ -21,12 +21,17 @@ const scene = new THREE.Scene();
 
 // Creating a sphere
 // To create a sphere, first we create the geometry.
-const geometry = new THREE.SphereGeometry(3, 64, 64);
+const geometry = new THREE.BoxGeometry( 3, 3, 3 );
 // The first parameter is the radius of the sphere. The second and third parameters are the width and height segments. The more segments, the more detailed the sphere will be.
+
+// We grab the texture that we want to use
+const texture = new THREE.TextureLoader().load( "./images/logo_mediapro.jpg" );
+
 
 // Then we create the material.
 const material = new THREE.MeshStandardMaterial({ 
-  color: 0x00ff83 
+  // color: 0xffffff,
+  map: texture
 });
 // The color property is the color of the sphere. You can use hexadecimal colors or the color name.
 
@@ -36,20 +41,21 @@ const mesh = new THREE.Mesh(geometry, material);
 
 // Then we add the mesh to the scene.
 console.log(mesh);
-// scene.add(mesh);
+scene.add(mesh);
 
 // Loading a 3D model
-const loader = new GLTFLoader();
-loader.load('./models/bastion/scene.gltf', (gltf) => {
-  // console.log(gltf);
-  scene.add(gltf.scene);
-});
+// const loader = new GLTFLoader();
+// loader.load('./models/bastion/scene.gltf', (gltf) => {
+//   // console.log(gltf);
+//   scene.add(gltf.scene);
+// });
+
 
 // Creating a light
 
 const light = new THREE.AmbientLight(0xffffff, 1);
 
-// const light = new THREE.PointLight(0xffffff, 1, 100);
+// const light = new THREE.PointLight(0xffffff, 15, 100);
 // The first parameter is the color of the light. The second parameter is the intensity of the light. The third parameter is the distance of the light. There are more effects that you can add to the light.
 
 // Then we set the position of the light.
@@ -149,7 +155,7 @@ const tl = gsap.timeline({defaults: {duration: 1}});
 // The third parameter is the final state of the object
 tl.fromTo(mesh.scale, {z:0, x:0, y:0}, {z:1, x:1, y:1});
 tl.fromTo("nav", {y: "-100%"}, {y: "0%", ease: "power2.inOut"});
-tl.fromTo(".title", {opacity: 0}, {opacity: 1, ease: "power2.inOut"});
+// tl.fromTo(".title", {opacity: 0}, {opacity: 1, ease: "power2.inOut"});
 
 
 // Color animator
@@ -165,10 +171,10 @@ document.addEventListener('mouseup', () => {
 
 document.addEventListener('mousemove', (event) => {
   if (mouseDown) {
-    rgb.r = event.clientX / sizes.width * 255;
-    rgb.g = event.clientY / sizes.height * 255;
-    rgb.b = Math.random() * 255;
-    console.log(rgb);
-    mesh.material.color.setRGB(rgb.r, rgb.g, rgb.b);
+    // rgb.r = event.clientX / sizes.width * 255;
+    // rgb.g = event.clientY / sizes.height * 255;
+    // rgb.b = Math.random() * 255;
+    // console.log(rgb);
+    // mesh.material.color.setRGB(rgb.r, rgb.g, rgb.b);
   }
 });
